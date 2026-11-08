@@ -2,93 +2,81 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>חומר רך</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F6F6F6">
+<meta name="description" content="מקליטים משפט אחד, והוא הופך למשימה ברשימה.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="משימות קוליות">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>משימות קוליות</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="design/tokens.css">
-<style>
-*{box-sizing:border-box;margin:0}
-html,body{background:var(--bg);color:var(--ink);font-family:var(--font)}
-body{min-height:100dvh;display:flex;flex-direction:column}
-.bar{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;
-  padding:calc(var(--T)*.22) var(--margin);direction:rtl}
-.bar a{color:var(--ink);text-decoration:none;font-weight:600;font-size:calc(var(--T)*.28)}
-.bar .sub{color:var(--ink-2);font-size:calc(var(--T)*.17)}
-main{flex:1;width:100%;max-width:calc(var(--T)*var(--cols) + var(--gap)*(var(--cols) - 1) + var(--margin)*2);margin:0 auto;
-  padding:calc(var(--T)*.3) var(--margin) calc(var(--T)*2);
-  display:grid;grid-template-columns:repeat(var(--cols),var(--T));column-gap:var(--gap);row-gap:calc(var(--gap)*1.1);
-  grid-auto-rows:var(--T);direction:rtl}
-.m{background:var(--face);box-shadow:var(--raise);border:0;color:inherit;font:inherit;
-  transition:box-shadow .12s var(--ease),background .12s var(--ease),transform .12s var(--ease);cursor:pointer}
-.m:active,.m[aria-pressed="true"]{box-shadow:var(--press);background:var(--face-press);transform:translateY(1px)}
-.m:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
-.widget{grid-column:span 2;grid-row:span 2;border-radius:var(--r-widget);padding:calc(var(--T)*.22);
-  display:flex;flex-direction:column;justify-content:space-between;text-align:right}
-.widget .k{font-size:calc(var(--T)*.17);color:var(--ink-2);font-weight:500}
-.widget .n{font-size:calc(var(--T)*.9);font-weight:600;line-height:1;letter-spacing:-.02em}
-.widget .s{font-size:calc(var(--T)*.17);color:var(--ink-2);line-height:1.35}
-.cell{display:flex;flex-direction:column;align-items:center;gap:calc(var(--T)*.08)}
-.tile{flex:none;width:var(--T);height:var(--T);border-radius:var(--r-tile);display:grid;place-items:center;position:relative}
-.tile svg{width:38%;height:38%;stroke:var(--ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.lbl{font-size:calc(var(--T)*.15);color:var(--ink-2);font-weight:500;white-space:nowrap}
-.dot{position:absolute;top:14%;left:14%;width:calc(var(--T)*.1);height:calc(var(--T)*.1);border-radius:50%;background:var(--signal)}
-.tiles{grid-column:span 2;grid-row:span 2;display:grid;grid-template-columns:repeat(2,var(--T));grid-template-rows:repeat(2,var(--T));gap:inherit;column-gap:var(--gap);row-gap:calc(var(--gap)*1.1)}
-.panel{grid-column:span 4;grid-row:span 2;border-radius:var(--r-widget);padding:calc(var(--T)*.24);cursor:default;
-  display:flex;flex-direction:column;gap:calc(var(--T)*.14)}
-.panel h2{font-size:calc(var(--T)*.24);font-weight:600}
-.row{display:flex;align-items:center;gap:calc(var(--T)*.15);font-size:calc(var(--T)*.17)}
-.row .name{flex:0 0 32%;color:var(--ink-2)}
-.track{flex:1;height:calc(var(--T)*.11);border-radius:99px;background:var(--face);box-shadow:var(--press);overflow:hidden}
-.fill{height:100%;border-radius:99px;background:var(--ink)}
-.fill.ok{background:var(--ok)}
-.row .v{flex:0 0 auto;font-weight:600;min-width:3ch;text-align:left}
-mark{background:linear-gradient(transparent 55%,var(--marker) 55%);color:inherit;padding:0 .1em}
-.panel p{font-size:calc(var(--T)*.17);color:var(--ink-2);line-height:1.4}
-.dock{position:fixed;bottom:calc(var(--T)*.3);inset-inline:calc(var(--T)*.2);max-width:calc(var(--T)*8);margin:0 auto;
-  height:calc(var(--T)*1.3);border-radius:var(--r-dock);box-shadow:var(--raise);background:var(--face);
-  display:flex;align-items:center;padding:0 calc(var(--T)*.22);gap:calc(var(--T)*.18);direction:rtl}
-.dock input{flex:1;height:calc(var(--T)*.72);border:0;border-radius:calc(var(--r-dock)*.7);background:var(--face-press);box-shadow:var(--press);
-  padding:0 calc(var(--T)*.22);font:inherit;font-size:calc(var(--T)*.19);color:var(--ink);direction:rtl}
-.dock input::placeholder{color:var(--ink-3)}
-.dock input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-.dock .go{width:calc(var(--T)*.72);height:calc(var(--T)*.72);border-radius:50%;display:grid;place-items:center}
-.dock .go svg{width:42%;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round}
-</style>
+<link rel="stylesheet" href="app.css">
+<script src="https://appofapp-gh.vercel.app/ai-menu.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
 </head>
 <body>
-<header class="bar"><a href="./">משימה כוללת</a><span class="sub">יום ראשון, 8 בנובמבר</span></header>
-<main>
-  <button class="m widget" aria-label="משימות פתוחות היום">
-    <span class="k">היום</span>
-    <span class="n">7</span>
-    <span class="s">משימות פתוחות.<br>2 דורשות החלטה שלך.</span>
-  </button>
-  <div class="tiles">
-    <div class="cell"><button class="m tile" aria-label="משימה חדשה"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><span class="lbl">חדשה</span></div>
-    <div class="cell"><button class="m tile" aria-label="יומן"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></button><span class="lbl">יומן</span></div>
-    <div class="cell"><button class="m tile" aria-label="התראות"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5h4"/></svg><span class="dot"></span></button><span class="lbl">התראות</span></div>
-    <div class="cell"><button class="m tile" aria-label="צוות"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3.2"/><path d="M3.5 19c.8-3 3-4.5 5.5-4.5s4.7 1.5 5.5 4.5"/><circle cx="17" cy="8" r="2.4"/><path d="M16 13.2c2.3 0 4 1.3 4.6 3.8"/></svg></button><span class="lbl">צוות</span></div>
-  </div>
-  <section class="m panel" aria-label="התקדמות השבוע">
-    <h2>התקדמות השבוע</h2>
-    <div class="row"><span class="name">תכנון</span><span class="track"><span class="fill ok" style="width:100%;display:block"></span></span><span class="v">100%</span></div>
-    <div class="row"><span class="name">ביצוע</span><span class="track"><span class="fill" style="width:62%;display:block"></span></span><span class="v">62%</span></div>
-    <div class="row"><span class="name">בקרה</span><span class="track"><span class="fill" style="width:20%;display:block"></span></span><span class="v">20%</span></div>
-    <p>הביצוע מתקדם, אבל <mark>הבקרה מפגרת בשלושה ימים</mark>.</p>
+<header class="bar" dir="rtl">
+  <a class="brand" href="./">משימות קוליות</a>
+  <span class="saved" id="saved" aria-live="polite"></span>
+  <ai-menu phone chat="https://claude.ai/code/session_01UBnSCJX164CAgvhrgkuEge"></ai-menu>
+</header>
+
+<main id="main" dir="rtl">
+  <section class="m widget rec" aria-label="הקלטה">
+    <button class="m mic" type="button" id="record" aria-label="התחלת הקלטה">
+      <span class="mic-dot" aria-hidden="true"></span>
+    </button>
+    <div class="rec-text">
+      <div class="rec-title" id="rec-title">לחצי ודברי</div>
+      <div class="rec-timer" id="timer" dir="ltr">00:00</div>
+    </div>
   </section>
-  <div class="cell"><button class="m tile" aria-label="מסמכים"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></button><span class="lbl">מסמכים</span></div>
-  <div class="cell"><button class="m tile" aria-label="דוחות"><svg viewBox="0 0 24 24"><path d="M5 20V10M10 20V5M15 20v-7M20 20v-4"/></svg></button><span class="lbl">דוחות</span></div>
-  <div class="cell"><button class="m tile" aria-label="מפה"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></button><span class="lbl">מפה</span></div>
-  <div class="cell"><button class="m tile" aria-pressed="true" aria-label="הושלמו"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button><span class="lbl">הושלמו</span></div>
-  <div class="cell"><button class="m tile" aria-label="ארכיון"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="4" rx="1.5"/><path d="M5 9v10h14V9M10 13h4"/></svg></button><span class="lbl">ארכיון</span></div>
-  <div class="cell"><button class="m tile" aria-label="אנשי קשר"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1-3.5 3.8-5.5 7-5.5s6 2 7 5.5"/></svg></button><span class="lbl">אנשי קשר</span></div>
-  <div class="cell"><button class="m tile" aria-label="תיוג"><svg viewBox="0 0 24 24"><path d="M3.5 12.5V4h8.5l8.5 8.5-8.5 8.5z"/><circle cx="8" cy="8.5" r="1.3"/></svg></button><span class="lbl">תיוג</span></div>
-  <div class="cell"><button class="m tile" aria-label="הגדרות"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button><span class="lbl">הגדרות</span></div>
+
+  <div class="tiles" dir="rtl">
+    <div class="cell"><button class="m tile num" type="button" id="f-open" aria-pressed="true" aria-label="משימות פתוחות"><span id="n-open">0</span></button><span class="lbl">פתוחות</span></div>
+    <div class="cell"><button class="m tile num" type="button" id="f-done" aria-pressed="false" aria-label="ארכיון"><span id="n-done">0</span></button><span class="lbl">בוצעו</span></div>
+    <div class="cell"><button class="m tile" type="button" id="t-write" aria-label="כתיבת משימה"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button><span class="lbl">כתיבה</span></div>
+    <div class="cell"><button class="m tile" type="button" id="t-sync" aria-label="סנכרון בין מכשירים"><svg viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 0 1-.5-9A6 6 0 0 1 18 8.5a4.5 4.5 0 0 1-.5 9.5z"/></svg><span class="dot" id="sync-dot" hidden></span></button><span class="lbl" id="sync-lbl">במכשיר</span></div>
+  </div>
+
+  <section class="m panel live" aria-label="תמלול">
+    <div class="live-head"><span class="k" id="live-k">תמלול</span><span class="k soft" id="platform"></span></div>
+    <div class="sunk live-box" id="live" aria-live="polite">מה שתגידי יופיע כאן, ויהפוך למשימה כשתעצרי.</div>
+  </section>
+
+  <section class="m panel list" aria-labelledby="list-title">
+    <div class="list-head">
+      <h2 id="list-title">משימות פתוחות</h2>
+      <span class="k" id="list-count"></span>
+    </div>
+    <ul class="tasks" id="tasks"></ul>
+  </section>
 </main>
-<form class="dock" onsubmit="return false" role="search">
-  <input type="search" placeholder="חיפוש או משימה חדשה" aria-label="חיפוש או משימה חדשה" dir="rtl">
-  <button class="m go" aria-label="שליחה"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+
+<form class="dock" id="dock" dir="rtl" autocomplete="off">
+  <input id="quick" type="text" enterkeyhint="done" placeholder="או כתבי משימה" aria-label="כתיבת משימה" dir="rtl" maxlength="300">
+  <button class="m go" type="submit" aria-label="הוספת משימה"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
 </form>
+
+<div class="sheet-bg" id="sheet" hidden>
+  <div class="m sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" dir="rtl">
+    <h2 id="sheet-title">סנכרון בין מכשירים</h2>
+    <p class="k">בלי כניסה, המשימות נשמרות רק במכשיר הזה.<br>אחרי כניסה הן זמינות בכל מכשיר, ורק לך.</p>
+    <button class="m wide" type="button" id="google" hidden>כניסה עם Google</button>
+    <form id="magic" class="magic">
+      <input class="sunk-in" id="email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="כתובת מייל" aria-label="כתובת מייל" dir="ltr" required>
+      <button class="m wide" type="submit">שליחת קישור כניסה למייל</button>
+    </form>
+    <p class="k" id="sheet-msg" aria-live="polite"></p>
+    <button class="m wide ghost" type="button" id="sheet-close">סגירה</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js" defer></script>
 </body>
 </html>
