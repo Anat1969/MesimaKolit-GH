@@ -8,7 +8,7 @@
 - **נתונים:** תמיד localStorage (`voice-task-app-v2`). אחרי כניסה: Supabase `ktqmwpbzcnzkhjskqisy`, טבלה `vt_tasks`, RLS לפי `auth.uid()`. משימות מקומיות עולות לענן בכניסה הראשונה.
 - **כניסה:** קישור קסם במייל. כפתור Google מוצג רק כש-`/auth/v1/settings` מדווח שהוא פעיל.
 - **תמלול:** Web Speech API, `he-IL`. באייפון ובדפדפנים בלי תמלול: כתיבה במעגן.
-- **פריסה:** Vercel מ-main.
+- **פריסה:** Vercel מ-main. פרויקט `mesimakolit-gh`, https://mesimakolit-gh.vercel.app
 
 ## יומן
 - 08.11.2026: Claude (לבקשת ענת): הקוד המקורי הועבר לשפת "חומר רך", נוסף סנכרון אישי עם RLS במקום משתמש משותף, כתיבה ידנית במעגן, ארכיון כמסנן, PWA.
