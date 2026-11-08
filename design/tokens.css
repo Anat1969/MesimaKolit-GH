@@ -1,0 +1,54 @@
+/* שפת "חומר רך" — טוקנים. מקור: DESIGN-LANGUAGE.md */
+:root{
+  /* יחידת היסוד: אריח. כל מידה נגזרת ממנה */
+  --cols: 4;
+  --T: min(calc(100vw / 6.5), 92px);   /* 4 אריחים + 3 רווחים של חצי אריח + 2 שוליים של חצי אריח = 6.5 */
+  --gap: calc(var(--T) * .5);
+  --margin: calc(var(--T) * .5);
+
+  /* חומר: גוש אחד אפור־לבן. הפנים כהות מהרקע ב-4 נקודות בלבד */
+  --bg: #F6F6F6;
+  --face: #F2F2F2;
+  --face-press: #ECECEC;
+  --light: #FFFFFF;
+  --shade: rgba(0,0,0,.16);
+  --shade-near: rgba(0,0,0,.07);
+
+  /* דיו: הטקסט הוא הדבר היחיד שחור באמת */
+  --ink: #161616;
+  --ink-2: #5E5E5E;
+  --ink-3: #9A9A9A;
+
+  /* צבע רק עם תפקיד */
+  --signal: #D9480F;   /* דורש פעולה */
+  --ok: #2B8A3E;       /* הושלם */
+  --focus: #1C4E80;    /* פוקוס מקלדת */
+  --marker: #FFE45C;   /* מרקר לתובנה */
+
+  /* רדיוסים יחסיים לגודל הרכיב */
+  --r-tile: calc(var(--T) * .22);
+  --r-widget: calc(var(--T) * .32);
+  --r-dock: calc(var(--T) * .45);
+
+  /* הבלטה: אור מלמעלה, צל נופל למטה */
+  --raise:
+    0 calc(var(--T) * -.07) calc(var(--T) * .16) var(--light),
+    0 calc(var(--T) * .12) calc(var(--T) * .22) var(--shade),
+    0 calc(var(--T) * .02) calc(var(--T) * .05) var(--shade-near);
+  --press:
+    inset 0 calc(var(--T) * .06) calc(var(--T) * .12) var(--shade),
+    inset 0 calc(var(--T) * -.05) calc(var(--T) * .1) var(--light);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --font: "Rubik", "Assistant", system-ui, sans-serif;
+}
+@media (min-width: 900px){
+  :root{ --cols: 8; --T: 88px; }
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1E1E1E; --face:#232323; --face-press:#1B1B1B;
+    --light:rgba(255,255,255,.04); --shade:rgba(0,0,0,.55); --shade-near:rgba(0,0,0,.3);
+    --ink:#F2F2F2; --ink-2:#A8A8A8; --ink-3:#6E6E6E;
+  }
+}
